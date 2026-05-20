@@ -1,0 +1,34 @@
+run:
+  timeout: 5m
+  go: "1.22"
+
+linters:
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - gosec
+    - gofmt
+    - revive
+    - bodyclose
+    - noctx
+    - sqlclosecheck
+
+linters-settings:
+  gosec:
+    severity: medium
+    confidence: medium
+  revive:
+    rules:
+      - name: exported
+        disabled: false
+
+issues:
+  exclude-rules:
+    - path: "_test\\.go"
+      linters:
+        - gosec
+        - errcheck

@@ -1,0 +1,17 @@
+replicaCount: 2
+
+env:
+  ENV: staging
+  DB_SSLMODE: require
+
+ingress:
+  hosts:
+    - host: auth.staging.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5

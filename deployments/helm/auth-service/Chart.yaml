@@ -1,0 +1,13 @@
+apiVersion: v2
+name: auth-service
+description: JWT + OAuth2 + RBAC authentication microservice
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - auth
+  - jwt
+  - oauth2
+  - rbac
+maintainers:
+  - name: likhithnagaraj79

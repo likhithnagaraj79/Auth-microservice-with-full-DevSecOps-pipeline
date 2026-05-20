@@ -1,0 +1,26 @@
+replicaCount: 3
+
+env:
+  ENV: production
+  DB_SSLMODE: require
+
+ingress:
+  hosts:
+    - host: auth.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 60
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 512Mi

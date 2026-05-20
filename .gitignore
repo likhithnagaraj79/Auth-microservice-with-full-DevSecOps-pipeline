@@ -1,0 +1,34 @@
+# Secrets — never commit these
+.env
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+
+# Build artifacts
+/auth-service
+/bin/
+dist/
+
+# Go
+*.test
+*.out
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Helm
+charts/*/charts/
+*.tgz

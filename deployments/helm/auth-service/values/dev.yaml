@@ -1,0 +1,21 @@
+replicaCount: 1
+
+env:
+  ENV: development
+  DB_SSLMODE: disable
+  REDIS_HOST: redis-dev
+
+ingress:
+  hosts:
+    - host: auth.dev.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
