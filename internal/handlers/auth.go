@@ -110,7 +110,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 	}
 
 	h.storeRefreshToken(user.ID, tokens.RefreshToken)
-	h.db.Exec(`UPDATE users SET last_login_at=NOW() WHERE id=$1`, user.ID)
+	_, _ = h.db.Exec(`UPDATE users SET last_login_at=NOW() WHERE id=$1`, user.ID)
 
 	c.JSON(http.StatusOK, models.AuthResponse{
 		AccessToken:  tokens.AccessToken,
@@ -145,7 +145,7 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 		return
 	}
 
-	h.db.Exec(`UPDATE refresh_tokens SET revoked=TRUE WHERE id=$1`, rt.ID)
+	_, _ = h.db.Exec(`UPDATE refresh_tokens SET revoked=TRUE WHERE id=$1`, rt.ID)
 
 	tokens, err := h.jwtSvc.GenerateTokenPair(&user)
 	if err != nil {
@@ -170,7 +170,7 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	h.db.Exec(`UPDATE refresh_tokens SET revoked=TRUE WHERE token=$1`, req.RefreshToken)
+	_, _ = h.db.Exec(`UPDATE refresh_tokens SET revoked=TRUE WHERE token=$1`, req.RefreshToken)
 	c.JSON(http.StatusOK, gin.H{"message": "logged out successfully"})
 }
 
@@ -247,7 +247,7 @@ func (h *AuthHandler) Me(c *gin.Context) {
 }
 
 func (h *AuthHandler) storeRefreshToken(userID uuid.UUID, token string) {
-	h.db.Exec(`
+	_, _ = h.db.Exec(`
 		INSERT INTO refresh_tokens (id, user_id, token, expires_at)
 		VALUES ($1, $2, $3, $4)`,
 		uuid.New(), userID, token, time.Now().Add(h.cfg.JWT.RefreshTTL),

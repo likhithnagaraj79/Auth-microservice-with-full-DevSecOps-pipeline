@@ -53,7 +53,7 @@ func (g *GoogleProvider) ExchangeCode(ctx context.Context, code string) (*Google
 	if err != nil {
 		return nil, fmt.Errorf("fetch user info: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("google api returned status %d", resp.StatusCode)
